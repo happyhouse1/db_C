@@ -1,12 +1,22 @@
 #include <stdio.h>
+#include <stdint.h> // pour le int8_t erreur ?
+#include <assert.h> // debug essayer de caler un assert
 
 // https://www.geeksforgeeks.org/binary-tree-in-c/
 // Structure générale du Noeud
 struct Node {
-    int data;
+    int8_t data;    // utilisation de toutes petites valeurs
     struct Node* left;
     struct Node* right;
 };
+
+// Fonction pour parcourir l'arbre :https://www.geeksforgeeks.org/binary-tree-in-c/
+void inorderTraversal(struct Node* node) {
+    if (node == NULL) return;
+    inorderTraversal(node->left);            // Parcours branche gauche
+    printf("%d ", node->data);      // Affiche la donnée
+    inorderTraversal(node->right);           // Parcours branche droite
+}
 
 int main() {
    
@@ -53,6 +63,10 @@ int main() {
         printf("branche droite :\n");
     printf("à gauche de %d il y a %d\n", n0.data, n3.data);
     printf("à gauche de %d il y a %d\n", n3.data, n4.data);
+
+        // test parcours de l'arbre
+    printf("l'arbre est : ");
+    inorderTraversal(&n0); // racine
 
     return 0;
 }
