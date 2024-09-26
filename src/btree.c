@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-// Structure d'un nœud simple
+// https://www.geeksforgeeks.org/binary-tree-in-c/
+// Structure du Noeud
 struct Node {
     int data;
     struct Node* left;
