@@ -11,7 +11,7 @@ struct Node {
 };
 
 // Fonction pour parcourir l'arbre :https://www.geeksforgeeks.org/binary-tree-in-c/
-void inorderTraversal(struct Node* node) {
+void inorderTraversal(struct Node* node) { //déclaration fonction pour traverser l'arbre
     if (node == NULL) return;
     inorderTraversal(node->left);            // Parcours branche gauche
     printf("%d ", node->data);      // Affiche la donnée
