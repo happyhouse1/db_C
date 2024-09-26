@@ -20,11 +20,10 @@ int main() {
     n3.data = 3;
     n4.data = 4;
 
-    
+    // là faut que j'organise mes noeuds
 
 
-    // Affichage des données
-    printf("Donnée du nœud racine : %d\n", root.data);
+    // On verra pour l'affichage plus tard, doit être modifié 
 
     return 0;
 }
