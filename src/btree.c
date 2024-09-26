@@ -9,13 +9,17 @@ struct Node {
 };
 
 int main() {
-    // Déclaration d'un seul nœud statique
-    struct Node root;
+   
+    // Je déclare mon nombre de noeuds
+    struct Node n0, n1, n2, n3, n4;
 
-    // Initialisation des valeurs
-    root.data = 50;
-    root.left = NULL;  // Pas de sous-arbre gauche
-    root.right = NULL; // Pas de sous-arbre droit
+    // Je donne la valeurs random aux data de mes nodes
+    n0.data = 0; // c'est le noeud racine
+    n1.data = 1;
+    n2.data = 2;
+    n3.data = 3;
+    n4.data = 4;
+
 
     // Affichage des données
     printf("Donnée du nœud racine : %d\n", root.data);
