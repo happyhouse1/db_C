@@ -27,7 +27,19 @@ int main() {
 //   /     \
 //  2       4
     
-// là faut que j'organise mes noeuds
+// là faut que j'organise mes noeuds (&nX pour pointer l'addresse mémoire)
+// branche gauche de l'arbre
+    n0.left = &n1;
+    n1.left = &n2;
+    n1.right = NULL;
+    n2.left = NULL;
+    n2.right = NULL;
+// branche droite de l'arbre
+    n0.right = &n3;
+    n3.right = &n4;
+    n3.left = NULL;
+    n4.right = NULL;
+    n4.left = NULL;
 
 
     // On verra pour l'affichage plus tard, doit être modifié 
