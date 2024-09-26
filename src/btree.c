@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // https://www.geeksforgeeks.org/binary-tree-in-c/
-// Structure du Noeud
+// Structure générale du Noeud
 struct Node {
     int data;
     struct Node* left;
@@ -20,7 +20,14 @@ int main() {
     n3.data = 3;
     n4.data = 4;
 
-    // là faut que j'organise mes noeuds
+// schéma de l'arbre binaire 
+//      0
+//     / \
+//    1   3
+//   /     \
+//  2       4
+    
+// là faut que j'organise mes noeuds
 
 
     // On verra pour l'affichage plus tard, doit être modifié 
