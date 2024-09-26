@@ -20,6 +20,8 @@ int main() {
     n3.data = 3;
     n4.data = 4;
 
+    
+
 
     // Affichage des données
     printf("Donnée du nœud racine : %d\n", root.data);
