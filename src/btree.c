@@ -41,8 +41,18 @@ int main() {
     n4.right = NULL;
     n4.left = NULL;
 
-
-    // On verra pour l'affichage plus tard, doit être modifié 
+// Affichage des data pour voir si l'arbre est bien formé
+// à utiliser pour debug pour le moment
+//Affichage Racine
+    printf("la racine est %d\n", n0.data);
+// Affichage branche gauche    
+    printf("branche gauche :\n");
+    printf("à gauche de %d il y a %d\n", n0.data, n1.data);
+    printf("à gauche de %d il y a %d\n", n1.data, n2.data);
+// Affichage branche droite
+        printf("branche droite :\n");
+    printf("à gauche de %d il y a %d\n", n0.data, n3.data);
+    printf("à gauche de %d il y a %d\n", n3.data, n4.data);
 
     return 0;
 }
