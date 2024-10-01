@@ -25,14 +25,14 @@ struct Node* createnode(int8_t data) {
 
 int main() {
     struct Node* root = NULL; // initialisation du noeud root, arbre vide -> NULL
-    char command[20]; // https://www.w3schools.com/c/c_user_input.php
-    int value;
+    char command[20]; // https://www.w3schools.com/c/c_user_input.php // nombre de char que le user va entrer (à tester)
+    int value; // valeur random à entrer pour intérragir avec l'arbre
 
-    printf("Bienvenue dans l'arbre binaire interactif !\n");
-    printf("Commandes disponibles : createnode <valeur>, quit\n");
+    printf("Bienvenue dans l'arbre binaire interactif !\n"); // printf arbre interractif 
+    printf("Commandes disponibles : createnode <valeur>, quit\n"); // printf arbre interractif
 
-    while (1) {
-        printf("Entrez une commande : ");
+    while (1) { // while pour garder le cli ouvert, trop stylé
+        printf("Entrez une commande : "); // printf arbre interractif
         fgets(command, sizeof(command), stdin);
 
         // Commande "createnode"
