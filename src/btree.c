@@ -13,14 +13,41 @@ struct Node {
 // on veut créer un nouveau noeud
 struct Node* createnode(int8_t data) {
     struct Node* newnode = (struct Node*)malloc(sizeof(struct Node)); // allocation dynamique d'une case mémoire dans le noeud car la valeur n'est pas encore défénie alors -> malloc
-    if (newNode == NULL) { // check si une addresse mémoire a été alloué avec notre fonction createnode, si pas d'allocation -> NULL
+    if (newnode == NULL) { // check si une addresse mémoire a été alloué avec notre fonction createnode, si pas d'allocation -> NULL
         printf("Erreur d'allocation mémoire\n"); //
         exit(1); // exit si ça fail, notes cours (code erreur)
     }
-    newnode->data = data; // on donne la valeur qu'on vient d'entrée à notre newNode
+    newnode->data = data; // on donne la valeur qu'on vient d'entrée à notre newnode
     newnode->left = NULL; // on initialise une branche gauche 
     newnode->right = NULL; // on initialise une branche droite 
     return newnode;
+}
+
+// Fonction de suppression (deletenode)
+struct Node* deletenode(struct Node* root, int8_t key) { // pointeur vers node, noeud root valeur à suppr
+    if (root == NULL) return root; // si l'arbre est vide, peut rien faire
+    if (key < root->data) { // si valeur entrée plus petite que root on attribu à data et on check
+        root->left = deletenode(root->left, key); // valeur plus petite à gauche check
+    } else if (key > root->data) { // si valeur entrée plus petite que root on attribu à data et on check
+        root->right = deletenode(root->right, key); // check à droite
+    } else {
+        if (root->left == NULL) { // si le noeud n'a pas d'enfant a gauche
+            struct Node* temp = root->right; // valeur sous arbre droit dans temp
+            free(root); // libère la mémoire de root
+            return temp; // return la valeur à droite stocké dans temp (temporaireement)
+        } else if (root->right == NULL) { // on fait l'inverse pour la gauche
+            struct Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+        // SI DEUX ENFANTS!!!
+        struct Node* temp = root->right; // on veut check les noeuds à droite -> temp le noeud droits
+        while (temp && temp->left != NULL) // tant que il y a un enfant à gauche, il y a une petite valeur
+            temp = temp->left; //temp prend la valeur de l'enfant à gauche car plus petit et reboucle 
+        root->data = temp->data; // le noeud root, principal, prend la valeur de son succéseur stocké dans temp à la même addresse
+        root->right = deletenode(root->right, temp->data); // suppression noeud succésseur qui a la même valeur que le nouveau root 
+    }
+    return root; 
 }
 
 int main() {
@@ -29,29 +56,37 @@ int main() {
     int value; // valeur random à entrer pour intérragir avec l'arbre
 
     printf("Bienvenue dans l'arbre binaire interactif !\n"); // printf arbre interractif 
-    printf("Commandes disponibles : createnode <valeur>, quit\n"); // printf arbre interractif
+    printf("Commandes disponibles : createnode <valeur>, deletenode <valeur>, quit\n"); // printf arbre interractif
 
     while (1) { // while pour garder le cli ouvert, trop stylé
         printf("Entrez une commande : "); // printf arbre interractif
-        fgets(command, sizeof(command), stdin);
+        fgets(command, sizeof(command), stdin); // user saisie la commande https://www.geeksforgeeks.org/fgets-gets-c-language/
 
-        // Commande "createnode"
-        if (strncmp(command, "createnode", 10) == 0) {
-            sscanf(command + 11, "%d", &value);
-            root = createnode(value);  // Crée un nœud avec la valeur spécifiée
-            printf("Nœud %d inséré.\n", value);
+        // createnode
+        if (strncmp(command, "createnode", 10) == 0) { // compare si l'entrée "command" avec "createnode", il faut 0 diff
+            sscanf(command + 11, "%d", &value); // je donne à l'addresse value la valeur entrée après le 11eme caractère (entier entré par le user)
+            root = createnode(value);  // crée le noeud avec la valeur de value
+            printf("Nœud %d inséré.\n", value); // prinf intéractif
+        }
+        else if (strncmp(command, "deletenode", 10) == 0) { // compare avec l'entrée user les 10 premier caractère, 0 diff
+            sscanf(command + 11, "%d", &value); // attribue à l'addresse de value l'entrée de l'user après les 11 caractères (10 + espace)
+            root = deletenode(root, value); // root noeud racine, value = entrée user, on delete
+            printf("Nœud %d supprimé.\n", value); // print intéractif (%d entier)
         } 
-        // Commande "quit"
-        else if (strncmp(command, "quit", 4) == 0) {
-            printf("Fermeture du programme.\n");
-            break;
+        // quit
+        else if (strncmp(command, "quit", 4) == 0) { // compare l'entrée command dois correspondre aux 4 premier caractère de quit
+            printf("Fermeture du programme.\n"); // print intéractif
+            break; // ferme la boucle while, qui le programme
         } 
         else {
-            printf("Commande non reconnue. Veuillez réessayer.\n");
+            printf("Commande non reconnue. Veuillez réessayer.\n"); // Si saisie pas de commande répertoriée, resaisir
         }
     }
 
-    return 0;
+    return 0; // le fameux return 0
 }
 
-// test demain si ça marche, flemme là
+
+// TO DO :
+// afficher l'arbre
+// penser à faire une doc .. comment ?
