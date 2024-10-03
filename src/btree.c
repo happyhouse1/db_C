@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h> // pour malloc (memory allocation)
-#include <string.h>
+#include <string.h> 
 
 // Structure classique du node, vu en cours + 
 struct Node {
@@ -49,6 +49,13 @@ struct Node* deletenode(struct Node* root, int8_t key) { // pointeur vers node, 
     }
     return root; 
 }
+// https://www.geeksforgeeks.org/inorder-traversal-of-binary-tree/
+void printtraversal(struct Node* node) { // pas de retour, paramètre pointeur vers le noeud 
+    if (node == NULL) return; // si le noeud est NULL, pas de printtraversal fin de la branche de l'arbre
+    printtraversal(node->left); // traversal à gauche jusqu'à ce qu'il y ai plus de data
+    printf("%d ", node->data); // affiche la valeur du noeud à la fin du parcours (traversal)
+    printtraversal(node->right); // traversal à droite, plus grande valeur que la racine donc rien au dessus
+}
 
 int main() {
     struct Node* root = NULL; // initialisation du noeud root, arbre vide -> NULL
@@ -56,13 +63,11 @@ int main() {
     int value; // valeur random à entrer pour intérragir avec l'arbre
 
     printf("Bienvenue dans l'arbre binaire interactif !\n"); // printf arbre interractif 
-    printf("Commandes disponibles : createnode <valeur>, deletenode <valeur>, quit\n"); // printf arbre interractif
+    printf("Commandes disponibles : createnode <valeur>, deletenode <valeur>, printtree quit\n"); // printf arbre interractif
 
     while (1) { // while pour garder le cli ouvert, trop stylé
         printf("Entrez une commande : "); // printf arbre interractif
         fgets(command, sizeof(command), stdin); // user saisie la commande https://www.geeksforgeeks.org/fgets-gets-c-language/
-
-        // createnode
         if (strncmp(command, "createnode", 10) == 0) { // compare si l'entrée "command" avec "createnode", il faut 0 diff
             sscanf(command + 11, "%d", &value); // je donne à l'addresse value la valeur entrée après le 11eme caractère (entier entré par le user)
             root = createnode(value);  // crée le noeud avec la valeur de value
@@ -72,8 +77,12 @@ int main() {
             sscanf(command + 11, "%d", &value); // attribue à l'addresse de value l'entrée de l'user après les 11 caractères (10 + espace)
             root = deletenode(root, value); // root noeud racine, value = entrée user, on delete
             printf("Nœud %d supprimé.\n", value); // print intéractif (%d entier)
-        } 
-        // quit
+        }
+        else if (strncmp(command, "printtree", 9) == 0) { // compare avec l'entrée user les 9 premier caractère, 0 diff
+            printf("Parcours de l'arbre en ordre croissant : "); // print intéractif 
+            printtraversal(root); // appel la fonction printraversal avec la valeur de du noeud racine
+            printf("\n"); // print intéractif 
+        }
         else if (strncmp(command, "quit", 4) == 0) { // compare l'entrée command dois correspondre aux 4 premier caractère de quit
             printf("Fermeture du programme.\n"); // print intéractif
             break; // ferme la boucle while, qui le programme
@@ -90,3 +99,4 @@ int main() {
 // TO DO :
 // afficher l'arbre
 // penser à faire une doc .. comment ?
+// quand j'utilise print traversal ça print seulement la dernière valeur du createnode bug à corriger
