@@ -23,6 +23,20 @@ struct Node* createnode(int8_t data) {
     return newnode;
 }
 
+struct Node* insertnode(struct Node* root, int8_t data) { // insert node à appeler dans le main createnode
+    if (root == NULL) { // si le noeud racine est vide
+        return createnode(data); // on crée le noeud de manière classique avec createnode en associant data au nouveau noeud
+    }
+
+    if (data < root->data) { // si data est inférieur à la valeur du noeud racine on place la valeur à gauche (sous arbre gauche)
+        root->left = insertnode(root->left, data);  // on insère la valeur de root à left si c'est plus petit
+    } else {
+        root->right = insertnode(root->right, data);  // on insère la valeur de root à right si c'est plus grand
+    }
+
+    return root;
+}
+
 // Fonction de suppression (deletenode)
 struct Node* deletenode(struct Node* root, int8_t key) { // pointeur vers node, noeud root valeur à suppr
     if (root == NULL) return root; // si l'arbre est vide, peut rien faire
@@ -63,14 +77,14 @@ int main() {
     int value; // valeur random à entrer pour intérragir avec l'arbre
 
     printf("Bienvenue dans l'arbre binaire interactif !\n"); // printf arbre interractif 
-    printf("Commandes disponibles : createnode <valeur>, deletenode <valeur>, printtree quit\n"); // printf arbre interractif
+    printf("Commandes disponibles : createnode <valeur>, deletenode <valeur>, printtree, quit\n"); // printf arbre interractif
 
     while (1) { // while pour garder le cli ouvert, trop stylé
         printf("Entrez une commande : "); // printf arbre interractif
         fgets(command, sizeof(command), stdin); // user saisie la commande https://www.geeksforgeeks.org/fgets-gets-c-language/
         if (strncmp(command, "createnode", 10) == 0) { // compare si l'entrée "command" avec "createnode", il faut 0 diff
             sscanf(command + 11, "%d", &value); // je donne à l'addresse value la valeur entrée après le 11eme caractère (entier entré par le user)
-            root = createnode(value);  // crée le noeud avec la valeur de value
+            root = insertnode(root, value);  // utilisation de insert node à la place de createnode, pas de remplacement. Insertnode prend la valeur de data
             printf("Nœud %d inséré.\n", value); // prinf intéractif
         }
         else if (strncmp(command, "deletenode", 10) == 0) { // compare avec l'entrée user les 10 premier caractère, 0 diff
