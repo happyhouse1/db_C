@@ -15,3 +15,8 @@ Provide some tests (assert for now)
 you’ll need (balancing/splitting/searching/inserting/deleting and
 other if you have ideas)
 ● Do some disk persistence 
+
+
+# make
+# make clean
+# ./btree
