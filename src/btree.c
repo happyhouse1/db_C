@@ -37,7 +37,7 @@ struct Node* insertnode(struct Node* root, int8_t data) { // insert node à appe
     return root;
 }
 
-// Fonction de suppression (deletenode)
+// Supprimer noeud
 struct Node* deletenode(struct Node* root, int8_t key) { // pointeur vers node, noeud root valeur à suppr
     if (root == NULL) return root; // si l'arbre est vide, peut rien faire
     if (key < root->data) { // si valeur entrée plus petite que root on attribu à data et on check
@@ -70,6 +70,20 @@ void printtraversal(struct Node* node) { // pas de retour, paramètre pointeur v
     printf("%d ", node->data); // affiche la valeur du noeud à la fin du parcours (traversal)
     printtraversal(node->right); // traversal à droite, plus grande valeur que la racine donc rien au dessus
 }
+// test du afficher en ascii l'arbre
+void printascii(struct Node* root, int space) { // ne renvoie pas de valeur, pointeur comme d'hab vers le noeud root, int nombre d'espace pour créer l'arbre, on va voir ce que ça donne
+    int count = 10;  // indente de 10 espace à chaque fois
+    if (root == NULL) { // si le noeud et vide, return, cut.
+             return;}
+    space += count; // augemente la valeur de espace à chaque fois que l'on est à gauche dans l'arbre
+    printascii(root->right, space); // sous arbre droit + espace
+    printf("\n"); // insère une nouvelle ligne pour chaque noeud pour séparer
+    for (int i = count; i < space; i++) { // Plus on est loin dans le noeud plus y'aura d'espece 
+        printf(" "); // print l'espace
+    }
+    printf("%d\n", root->data); // affiche la valeure du noeud + print valeur du noeud
+    printascii(root->left, space); // sous arbre gauche + espace
+}
 
 int main() {
     struct Node* root = NULL; // initialisation du noeud root, arbre vide -> NULL
@@ -77,7 +91,7 @@ int main() {
     int value; // valeur random à entrer pour intérragir avec l'arbre
 
     printf("Bienvenue dans l'arbre binaire interactif !\n"); // printf arbre interractif 
-    printf("Commandes disponibles : createnode <valeur>, deletenode <valeur>, printtree, quit\n"); // printf arbre interractif
+    printf("Commandes disponibles : createnode <valeur>, deletenode <valeur>, printtree, printascii, quit\n"); // printf arbre interractif
 
     while (1) { // while pour garder le cli ouvert, trop stylé
         printf("Entrez une commande : "); // printf arbre interractif
@@ -92,9 +106,14 @@ int main() {
             root = deletenode(root, value); // root noeud racine, value = entrée user, on delete
             printf("Nœud %d supprimé.\n", value); // print intéractif (%d entier)
         }
-        else if (strncmp(command, "printtree", 9) == 0) { // compare avec l'entrée user les 9 premier caractère, 0 diff
+        else if (strncmp(command, "printtree", 9) == 0) { 
             printf("Parcours de l'arbre en ordre croissant : "); // print intéractif 
             printtraversal(root); // appel la fonction printraversal avec la valeur de du noeud racine
+            printf("\n"); // print intéractif  
+        }
+        else if (strncmp(command, "printascii", 10) == 0) { // compare avec l'entrée user les 10 premier caractère, 0 diff
+            printf("Affichage de l'arbre binaire en ASCII : \n"); // printf arbre interractif 
+            printascii(root, 0); // appel initial root et 0
             printf("\n"); // print intéractif 
         }
         else if (strncmp(command, "quit", 4) == 0) { // compare l'entrée command dois correspondre aux 4 premier caractère de quit
