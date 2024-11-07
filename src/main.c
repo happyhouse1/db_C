@@ -1,13 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "repl.c"
-#include <stdbool.h>
-#include <string.h>
+#include "btree.h"
+#include "repl.h"
 
-
-int main(int argc, char* argv[], char* envp[]){
-  
-  repl();
-  return 0;
-  
+int main() {
+    run_repl();
+    return 0; // le fameux return 0
 }
