@@ -1,27 +1,32 @@
 # reminder : https://dev.to/erhant/a-makefile-template-for-small-projects-1akc
 
-TARGET = mytree # nom du output
+TARGET = esgi-tree # nom du output
 
 CC = gcc # nom du compileur
 
 CFLAGS = -Wall -Wextra -g # debug lors de la compilation
 
-SRC_DIR = src # dossier source
+SRC = src/main.c src/btree.c src/repl.c # fichiers à compiler avec le chemin complet car bug avec variables
+OBJ = src/main.o src/btree.o src/repl.o # fichiers objets avec chemins complets car bug avec variables
 
-SRC = $(SRC_DIR)/main.c $(SRC_DIR)/btree.c $(SRC_DIR)/repl.c # fichiers à compiler avec le chemin complet
+all: $(TARGET) # règle de compilation par défaut
 
-OBJ = $(SRC:.c=.o) # replace par .o les fichiers en .c dans src pour la compilation
-
-$(TARGET): $(OBJ) # regle de compilation par défaut : https://condor.depaul.edu/ealshaer/courses/TDC561/resources/MakefileTutorial.htm
+$(TARGET): $(OBJ) # compilation de l'exécutable final
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
 
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.c # genere chaque .o à partir des .c
-	$(CC) $(CFLAGS) -c $< -o $@
+# règles explicites pour chaque fichier .o fixed
+src/main.o: src/main.c
+	$(CC) $(CFLAGS) -c src/main.c -o src/main.o
+
+src/btree.o: src/btree.c
+	$(CC) $(CFLAGS) -c src/btree.c -o src/btree.o
+
+src/repl.o: src/repl.c
+	$(CC) $(CFLAGS) -c src/repl.c -o src/repl.o
 
 clean: # make clean
 	rm -f $(OBJ) $(TARGET)
 
-rebuild: clean $(TARGET)
+rebuild: clean all # recompile tout
 
-.PHONY: clean rebuild # jsp mais marche pas sans (makefile template)
-
+.PHONY: all clean rebuild # déclare les cibles phony pour éviter les erreurs
