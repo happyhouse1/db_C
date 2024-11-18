@@ -1,3 +1,5 @@
+### Léo GUYOT SI2
+
 # From the root directory type : "make"
 
 # You can see that "esgi-tree" appears
